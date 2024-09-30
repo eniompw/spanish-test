@@ -1,0 +1,190 @@
+/* Global variables */
+:root {
+    --primary-color: #04AA6D;
+    --bg-color: #f0f0f0;
+    --text-color: #333;
+    --shadow: 0 2px 4px rgba(0,0,0,0.1);
+    --border-radius: 4px;
+}
+
+/* Base styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px 20px 100px;
+    background-color: var(--bg-color);
+}
+
+/* Header styles */
+h1 {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* Container styles */
+.container, #feedback {
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+/* Button styles */
+button {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #038f5d;
+}
+
+/* Answer input styles */
+.answer-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 12px 12px 30px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 18px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #666;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-style: italic;
+    border-radius: var(--border-radius);
+}
+
+/* Progress bar styles */
+#progressBar {
+    margin: 15px 0 10px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+#progressBarFill {
+    transition: width 0.5s linear;
+}
+
+/* Feedback section styles */
+#feedback {
+    margin-top: 10px;
+    padding: 20px;
+    background-color: var(--bg-color);
+}
+
+#feedback h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+    margin: 0 0 10px;
+}
+
+/* Navigation button overlay */
+.button-overlay {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    opacity: 1; /* Change this from 0 to 1 */
+    visibility: hidden;
+    transition: visibility 0.5s, transform 0.5s;
+    transform: translateY(20px);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    pointer-events: none;
+}
+
+.button-overlay.show-buttons {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.button-overlay button {
+    width: auto; /* Add this line to override the 100% width */
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+}
+
+#tryAgain {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#tryAgain.show-buttons {
+    display: inline-block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Remove this rule as it's conflicting with our new setup */
+/* .show-buttons {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+} */
+
+/* Loading animation */
+.loading {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 10px 10px 120px;
+    }
+    .button-overlay {
+        flex-direction: column;
+        align-items: center;
+    }
+    .button-overlay button {
+        width: 80%;
+    }
+}
+
+.error-message {
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.error-message h2 {
+    color: #f44336;
+    margin-top: 0;
+}

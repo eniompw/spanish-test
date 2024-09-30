@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish Exam Tutor</title>
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <!-- External JavaScript file -->
+    <script src="static/script.js" defer></script>
+</head>
+<body>
+    <h1>Spanish Exam Tutor</h1>
+    <main class="w3-container">
+        <!-- Display the current question -->
+        <div id="question-container">
+            <h2>Question:</h2>
+            <p id="question">{{ question | safe }}</p>
+        </div>
+        
+        <!-- Answer input area -->
+        <label for="answer"><b>Answer</b></label>
+        <div class="answer-container">
+            <textarea id="answer" placeholder="Enter Answer" rows="4" required></textarea>
+            <div class="tooltip">Ctrl + Enter to Submit</div>
+        </div>
+        
+        <button id="submit" onclick="fetchFeedback()">Submit</button>
+
+        <!-- Progress bar -->
+        <div id="progressBar" class="w3-light-grey">
+            <div id="progressBarFill" class="w3-container w3-green w3-center"></div>
+        </div>
+    </main>
+
+    <!-- Feedback section -->
+    <section id="feedback">
+        <h2 id="summary-heading">Summary:</h2>
+        <div id="flash"></div>
+        <p></p> <!-- This adds a space between flash and pro responses -->
+        <h2 id="detail-heading">Detailed Feedback:</h2>
+        <div id="pro"></div>
+    </section>
+
+    <!-- Navigation and try again buttons -->
+    <div class="button-overlay">
+        <button id="previous">Previous</button>
+        <button id="next">Next</button>
+        <button id="tryAgain">Try Again</button>
+    </div>
+</body>
+</html>

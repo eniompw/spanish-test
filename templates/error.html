@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Spanish Exam Tutor</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Spanish Exam Tutor - Error</h1>
+    <main class="w3-container">
+        <div class="error-message">
+            <h2>An error occurred:</h2>
+            <p>{{ error }}</p>
+        </div>
+        <a href="{{ url_for('home') }}" class="w3-button w3-blue">Return to Home</a>
+    </main>
+</body>
+</html>
