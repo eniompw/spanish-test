@@ -136,7 +136,12 @@ function initializeApp() {
         const response = await fetch(`/ai_response/flash?answer=${answer}`).then(res => res.json());
         console.log("Received flash response:", response);
         setProgress(40);
-        elements.flashOutput.innerHTML = response.response;
+        if (response.error) {
+            console.error("Flash response error:", response.error);
+            elements.flashOutput.innerHTML = `<p class="error">${response.error}</p>`;
+        } else {
+            elements.flashOutput.innerHTML = response.response;
+        }
         await scrollToElement(elements.summaryHeading);
     }
 
@@ -149,7 +154,12 @@ function initializeApp() {
         console.log("Received pro response:", response);
         waitingForPro = false;
         setProgress(100);
-        elements.proOutput.innerHTML = markdownToHtmlBold(response.response);
+        if (response.error) {
+            console.error("Pro response error:", response.error);
+            elements.proOutput.innerHTML = `<p class="error">${response.error}</p>`;
+        } else {
+            elements.proOutput.innerHTML = markdownToHtmlBold(response.response);
+        }
         await scrollToElement(elements.detailHeading);
     }
 

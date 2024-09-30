@@ -6,6 +6,7 @@ from google.generativeai import configure, GenerativeModel
 from datetime import datetime, timedelta, timezone
 import jinja2
 from google.api_core.exceptions import ResourceExhausted
+import traceback
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -54,8 +55,16 @@ def get_ai_response(model, query):
             # Use Gemini model for pro response
             response = gemini_model.generate_content(query)
             return response.text.replace("\n", "<br>")  # Replace newlines with HTML line breaks
-    except ResourceExhausted:
-        return "The AI service is currently busy. Please wait 30 seconds and try again."
+    except ResourceExhausted as e:
+        error_message = f"ResourceExhausted: The AI service is currently busy. Please wait 30 seconds and try again. Details: {str(e)}"
+        app.logger.error(f"AI Response Error: {error_message}")
+        app.logger.error(f"Traceback: {traceback.format_exc()}")
+        return {"error": error_message}
+    except Exception as e:
+        error_message = f"Unexpected error in get_ai_response: {str(e)}"
+        app.logger.error(f"AI Response Error: {error_message}")
+        app.logger.error(f"Traceback: {traceback.format_exc()}")
+        return {"error": error_message}
 
 # Modify the get_question_data function
 def get_question_data():
@@ -100,6 +109,8 @@ def home():
         full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
         session['question'] = full_question.replace('\n', '<br>')
         session['ms'] = current_question['answer']
+        session['insert_text'] = insert_text
+        session['marks'] = current_question['marks']  # Assuming 'marks' is a column in the Questions table
 
         return render_template('index.html', question=session['question'])
     except Exception as e:
@@ -116,7 +127,9 @@ def ai_response(model):
         Write a short and concise summary (Don't narrate your response).
         """,
         'pro': """
+        Insert text: {insert_text}
         Question: {question}
+        Marks available: {marks}
         Student's answer: {answer}
         Mark scheme: {ms}
         I am the student now mark my answer and give clear and detailed feedback on it.
@@ -125,13 +138,17 @@ def ai_response(model):
     
     # Format the query based on the selected model
     query = query_templates[model].format(
+        insert_text=session.get('insert_text', ''),
         question=session['question'],
+        marks=session.get('marks', ''),
         answer=request.args.get('answer'),
-        ms=session['ms'] if model == 'pro' else ''
+        ms=session['ms']
     )
     
     # Get and return the AI response
     response = get_ai_response(model, query)
+    if isinstance(response, dict) and 'error' in response:
+        return jsonify(response), 503  # Service Unavailable
     return jsonify({'response': response})
 
 # Route to get current question number
@@ -162,6 +179,8 @@ def next_question():
         full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
         session['question'] = full_question.replace('\n', '<br>')
         session['ms'] = current_question['answer']
+        session['insert_text'] = insert_text
+        session['marks'] = current_question['marks']
         
         return jsonify({
             'success': True,
@@ -189,6 +208,8 @@ def previous_question():
         full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
         session['question'] = full_question.replace('\n', '<br>')
         session['ms'] = current_question['answer']
+        session['insert_text'] = insert_text
+        session['marks'] = current_question['marks']
         
         return jsonify({
             'success': True,
