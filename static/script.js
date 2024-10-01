@@ -208,14 +208,30 @@ function initializeApp() {
         hideProgressBar(); // Add this line
     }
 
-    function updateQuestion(question) {
-        document.getElementById('question').innerHTML = question;
+    function updateQuestion(data) {
+        const insertTextElement = document.getElementById('insert-text');
+        const questionTextElement = document.getElementById('question-text');
+        const marksElement = document.getElementById('marks');
+        const insertContainer = document.getElementById('question-container').querySelector('h2');
+
+        if (data.insert_text) {
+            insertTextElement.innerHTML = data.insert_text;
+            insertContainer.style.display = 'block';
+            insertTextElement.style.display = 'block';
+        } else {
+            insertContainer.style.display = 'none';
+            insertTextElement.style.display = 'none';
+        }
+
+        questionTextElement.innerHTML = data.question_text;
+        marksElement.innerHTML = `<strong>[${data.marks} marks]</strong>`;
+
         elements.answerInput.value = '';
         elements.flashOutput.textContent = '';
         elements.proOutput.textContent = '';
         setFocus();
-        resetProgressBar(); // Add this line
-        updateNavigationButtons(); // Add this line
+        resetProgressBar();
+        updateNavigationButtons();
     }
 
     function tryAgain() {
@@ -261,10 +277,8 @@ function initializeApp() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    updateQuestion(data.question);
+                    updateQuestion(data);
                     resetUI();
-                    resetProgressBar();
-                    updateNavigationButtons();
                 } else {
                     console.error(data.message);
                     alert(data.message);

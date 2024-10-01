@@ -188,3 +188,24 @@ textarea {
     color: #f44336;
     margin-top: 0;
 }
+
+/* Add these new styles */
+#question-container h2 {
+    color: var(--primary-color);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#insert-text, #question-text {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid #ddd;
+}
+
+#marks {
+    font-size: 1.1em;
+    color: var(--primary-color);
+    text-align: right;
+    margin-top: 10px;
+}

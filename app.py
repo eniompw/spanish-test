@@ -107,14 +107,12 @@ def home():
         question_text = current_question['question']
         marks = current_question['marks']
         
-        full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
-        full_question_with_marks = f"{full_question}<br><strong>[{marks} marks]</strong>"
-        session['question'] = full_question_with_marks.replace('\n', '<br>')
-        session['ms'] = current_question['answer']
         session['insert_text'] = insert_text
+        session['question_text'] = question_text
         session['marks'] = marks
+        session['ms'] = current_question['answer']
 
-        return render_template('index.html', question=session['question'])
+        return render_template('index.html', insert_text=insert_text, question_text=question_text, marks=marks)
     except Exception as e:
         return render_error(str(e))
 
@@ -179,16 +177,16 @@ def next_question():
         question_text = current_question['question']
         marks = current_question['marks']
         
-        full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
-        full_question_with_marks = f"{full_question}<br><strong>[{marks} marks]</strong>"
-        session['question'] = full_question_with_marks.replace('\n', '<br>')
-        session['ms'] = current_question['answer']
         session['insert_text'] = insert_text
+        session['question_text'] = question_text
         session['marks'] = marks
+        session['ms'] = current_question['answer']
         
         return jsonify({
             'success': True,
-            'question': session['question'],
+            'insert_text': insert_text,
+            'question_text': question_text,
+            'marks': marks,
             'number': session['number'],
             'total': len(rows)
         })
@@ -210,16 +208,16 @@ def previous_question():
         question_text = current_question['question']
         marks = current_question['marks']
         
-        full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
-        full_question_with_marks = f"{full_question}<br><strong>[{marks} marks]</strong>"
-        session['question'] = full_question_with_marks.replace('\n', '<br>')
-        session['ms'] = current_question['answer']
         session['insert_text'] = insert_text
+        session['question_text'] = question_text
         session['marks'] = marks
+        session['ms'] = current_question['answer']
         
         return jsonify({
             'success': True,
-            'question': session['question'],
+            'insert_text': insert_text,
+            'question_text': question_text,
+            'marks': marks,
             'number': session['number'],
             'total': len(rows)
         })

@@ -15,8 +15,13 @@
     <main class="w3-container">
         <!-- Display the current question -->
         <div id="question-container">
+            {% if insert_text %}
+            <h2>Insert:</h2>
+            <p id="insert-text">{{ insert_text | safe }}</p>
+            {% endif %}
             <h2>Question:</h2>
-            <p id="question">{{ question | safe }}</p>
+            <p id="question-text">{{ question_text | safe }}</p>
+            <p id="marks"><strong>[{{ marks }} marks]</strong></p>
         </div>
         
         <!-- Answer input area -->
