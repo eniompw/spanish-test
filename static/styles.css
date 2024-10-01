@@ -196,11 +196,14 @@ textarea {
     margin-bottom: 10px;
 }
 
+/* Update these styles */
 #insert-text, #question-text {
     background-color: #fff;
     padding: 10px;
     border-radius: var(--border-radius);
     border: 1px solid #ddd;
+    white-space: pre-wrap; /* This will preserve new lines */
+    word-wrap: break-word; /* This will wrap long words */
 }
 
 #marks {
