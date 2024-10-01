@@ -108,7 +108,7 @@ def home():
         marks = current_question['marks']
         
         full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
-        full_question_with_marks = f"{full_question} [{marks} marks]"
+        full_question_with_marks = f"{full_question}<br><strong>[{marks} marks]</strong>"
         session['question'] = full_question_with_marks.replace('\n', '<br>')
         session['ms'] = current_question['answer']
         session['insert_text'] = insert_text
@@ -180,7 +180,7 @@ def next_question():
         marks = current_question['marks']
         
         full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
-        full_question_with_marks = f"{full_question} [{marks} marks]"
+        full_question_with_marks = f"{full_question}<br><strong>[{marks} marks]</strong>"
         session['question'] = full_question_with_marks.replace('\n', '<br>')
         session['ms'] = current_question['answer']
         session['insert_text'] = insert_text
@@ -211,7 +211,7 @@ def previous_question():
         marks = current_question['marks']
         
         full_question = f"{insert_text}\n\n{question_text}" if insert_text else question_text
-        full_question_with_marks = f"{full_question} [{marks} marks]"
+        full_question_with_marks = f"{full_question}<br><strong>[{marks} marks]</strong>"
         session['question'] = full_question_with_marks.replace('\n', '<br>')
         session['ms'] = current_question['answer']
         session['insert_text'] = insert_text
