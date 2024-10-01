@@ -108,6 +108,7 @@ def home():
         marks = current_question['marks']
         
         session['insert_text'] = insert_text
+        session['question'] = question_text  # Change this line
         session['question_text'] = question_text
         session['marks'] = marks
         session['ms'] = current_question['answer']
@@ -139,10 +140,10 @@ def ai_response(model):
     # Format the query based on the selected model
     query = query_templates[model].format(
         insert_text=session.get('insert_text', ''),
-        question=session['question'],
+        question=session.get('question', ''),  # Change this line
         marks=session.get('marks', ''),
-        answer=request.args.get('answer'),
-        ms=session['ms']
+        answer=request.args.get('answer', ''),
+        ms=session.get('ms', '')  # Change this line
     )
     
     # Get and return the AI response
@@ -178,6 +179,7 @@ def next_question():
         marks = current_question['marks']
         
         session['insert_text'] = insert_text
+        session['question'] = question_text  # Add this line
         session['question_text'] = question_text
         session['marks'] = marks
         session['ms'] = current_question['answer']
@@ -209,6 +211,7 @@ def previous_question():
         marks = current_question['marks']
         
         session['insert_text'] = insert_text
+        session['question'] = question_text  # Add this line
         session['question_text'] = question_text
         session['marks'] = marks
         session['ms'] = current_question['answer']
